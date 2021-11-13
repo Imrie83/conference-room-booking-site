@@ -87,8 +87,5 @@ class ReserveRoomView(View):
 
 class DetailedView(View):
     def get(self, request, id):
-        today = datetime.now().strftime('%Y-%m-%d')
         room = Room.objects.get(id=id)
-        reservation = Reservation.objects.filter(room=id).exclude(date__lte=today)
-
-        return render(request, 'conference_app/details.html', {'room': room, 'reservations': reservation})
+        return render(request, 'conference_app/details.html', {'room': room})
