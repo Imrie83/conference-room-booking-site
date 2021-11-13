@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>{{ room.name }}</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-$END$
+    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem;">
+        <div>
+            <p>{{ room.name }}</p>
+        </div>
+        <div>
+            <p>
+                Capacity: {{ room.capacity }}<br>
+                Projector: {{ room.projector|yesno:"✔,✘" }}<br>
+                Reservations:
+                {% for reservation in reservations.all %}
+                    <div>
+                        Date: {{ reservation.date }}<br>
+                        Comments: {{ reservation.comment }}
+                    </div><br>
+                {% endfor %}
+            </p>
+            <div style="align: center">
+            <a href="/room/modify/{{ room.id }}" class="btn btn-primary">Edit</a>
+            <a href="/room/reserve/{{ room.id }}" class="btn btn-primary">Book</a>
+            <a href="/room/delete/{{ room.id }}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

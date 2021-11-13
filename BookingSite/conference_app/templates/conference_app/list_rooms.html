@@ -20,8 +20,8 @@ a.button {
             <h5 class="card-title"><a href="/room/{{ room.id }}/" >{{ room.name }}</a></h5><br>
             <p class="card-text">
                 Capacity: {{ room.capacity }}<br>
-                Available: {{ room.availability }}<br>
-                Projector: {{ room.projector }}<br>
+                Available: {{ room.availability|yesno:"✔,✘" }}<br>
+                Projector: {{ room.projector|yesno:"✔,✘" }}<br>
             </p>
             <a href="/room/modify/{{ room.id }}" class="btn btn-primary">Edit</a>
             <a href="/room/reserve/{{ room.id }}" class="btn btn-primary">Book</a>
