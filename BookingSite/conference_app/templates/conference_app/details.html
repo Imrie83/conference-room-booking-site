@@ -19,7 +19,7 @@
                 Capacity: {{ room.capacity }}<br>
                 Projector: {{ room.projector|yesno:"✔,✘" }}<br>
                 Reservations:
-                {% for reservation in reservations.all %}
+                    {% for reservation in room.reservation_list.all %}
                     <div>
                         Date: {{ reservation.date }}<br>
                         Comments: {{ reservation.comment }}

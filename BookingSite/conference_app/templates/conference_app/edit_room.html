@@ -23,7 +23,7 @@
                     Capacity: <input type="text" name="capacity" value="{{ room.capacity }}">
                 </label><br>
                 <label>
-                    Projector: <input type="checkbox" name="projector" checked="{{ room.projector }}">
+                    Projector: <input type="checkbox" name="projector" {% if room.projector %}checked {% endif %}">
                 </label><br>
                 <input type="submit" value="Submit" class="btn btn-primary">
                 <a href="/rooms/" class="btn btn-primary">Back</a>
