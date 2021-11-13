@@ -20,7 +20,8 @@ from conference_app.views import (
     ListAllRoomsView,
     ModifyRoomView,
     ReserveRoomView,
-    DeleteRoomView
+    DeleteRoomView,
+    DetailedView,
 )
 
 urlpatterns = [
@@ -30,4 +31,5 @@ urlpatterns = [
     re_path(r'^room/reserve/(?P<id>\d+)/$', ReserveRoomView.as_view(), name='reserve-room'),
     re_path(r'^room/delete/(?P<id>\d+)/$', DeleteRoomView.as_view(), name='delete-room'),
     re_path(r'^rooms/$', ListAllRoomsView.as_view(), name='all-rooms'),
+    re_path(r'^room/(?P<id>\d+)/$', DetailedView.as_view(), name='details'),
 ]
