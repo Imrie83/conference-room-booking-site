@@ -6,7 +6,11 @@
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem;">
+    <div>
+        <a href="/rooms/" class="btn btn-primary">Home</a>
+        <a href="/room/new/" class="btn btn-primary">Add Room</a>
+    </div>
+    <div class="card" style="width: 20rem; margin: 2rem 0 0 2rem; padding: 1rem;">
         <div>
             <p>{{ room.name }}</p>
         </div>
@@ -25,6 +29,7 @@
             <div style="align: center">
             <a href="/room/modify/{{ room.id }}" class="btn btn-primary">Edit</a>
             <a href="/room/reserve/{{ room.id }}" class="btn btn-primary">Book</a>
+            <a href="/rooms/" class="btn btn-primary">Back</a>
             <a href="/room/delete/{{ room.id }}" class="btn btn-danger">Delete</a>
             </div>
         </div>

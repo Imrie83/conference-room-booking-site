@@ -26,6 +26,7 @@ from conference_app.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', ListAllRoomsView.as_view()),
     re_path(r'^room/new/$', AddRoomView.as_view(), name='add-room'),
     re_path(r'^room/modify/(?P<id>\d+)/$', ModifyRoomView.as_view(), name='modify-room'),
     re_path(r'^room/reserve/(?P<id>\d+)/$', ReserveRoomView.as_view(), name='reserve-room'),

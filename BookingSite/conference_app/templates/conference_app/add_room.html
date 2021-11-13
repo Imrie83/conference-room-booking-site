@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Room</title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
+    <div>
+        <a href="/rooms/" class="btn btn-primary">Home</a>
+        <a href="/room/new/" class="btn btn-primary">Add Room</a>
+    </div>
+    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem; ">
     <form method="post">
         {% csrf_token %}
         <label>Room Name: <input type="text" name="name"></label><br>
         <label>Capacity: <input type="number" name="capacity" value="0"></label><br>
-        <label>Has a projector? <input type="checkbox" name="projector"></label>
+        <label>Has a projector? <input type="checkbox" name="projector"></label><br>
         <input type="submit" value="Add">
     </form>
+    </div>
 <div>{{ message }}</div>
 </body>
 </html>

@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, response
 from django.views import View
 from .models import Room, Reservation
+from datetime import datetime
 
 
 class AddRoomView(View):
@@ -25,7 +26,7 @@ class AddRoomView(View):
         else:
             return render(request, 'conference_app/add_room.html', {'message': 'Add room name'})
 
-        return render(request, 'conference_app/add_room.html', {'message': 'Room has been added!'})
+        return redirect("/")
 
 
 class ListAllRoomsView(View):
@@ -39,7 +40,7 @@ class ListAllRoomsView(View):
 class DeleteRoomView(View):
     def get(self, request, id):
         Room.objects.get(id=id).delete()
-        return render(request, 'conference_app/delete_room.html', {'message': 'Room has been deleted'})
+        return redirect("/")
 
 
 class ModifyRoomView(View):
@@ -51,17 +52,15 @@ class ModifyRoomView(View):
             return render(request, 'conference_app/edit_room.html', {'message': 'Room not found'})
 
     def post(self, request, id):
-        update_room = Room.object.get(id=id)
+        update_room = Room.objects.get(id=id)
 
         room_name = request.POST.get('name')
-        room_capacity = int(request.POST['capacity'])
+        room_capacity = int(request.POST.get('capacity'))
         projector = bool(request.POST.get('projector'))
 
         if room_name:
             if not room_capacity > 0:
-                return render(request, 'conference_app/edit_room.html', {
-                    'message': 'Room capacity has to be greater than 0', 'room': update_room
-                })
+                return HttpResponse('Room capacity has to be greater than 0')
             try:
                 update_room.name = room_name
                 update_room.capacity = room_capacity
@@ -69,13 +68,11 @@ class ModifyRoomView(View):
                 update_room.save()
             except Exception as e:
                 print(e)
-                return render(request, 'conference_app/edit_room.html', {
-                    'message': 'Room with this name exist', 'room': update_room
-                })
+                return HttpResponse('Room with this name exist')
         else:
-            return render(request, 'conference_app/edit_room.html', {'message': 'Add room name', 'room': update_room})
+            return HttpResponse('Add room name')
 
-        return render(request, 'conference_app/edit_room.html', {'message': 'Room has been modified!', 'room': update_room})
+        return redirect("/")
 
 
 class ReserveRoomView(View):
@@ -92,4 +89,6 @@ class DetailedView(View):
     def get(self, request, id):
         room = Room.objects.get(id=id)
         reservation = Reservation.objects.filter(room=id)
+        today = datetime.now().strftime('%Y-%m-%d')
+
         return render(request, 'conference_app/details.html', {'room': room, 'reservations': reservation})

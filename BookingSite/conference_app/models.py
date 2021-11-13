@@ -4,8 +4,12 @@ from django.db import models
 class Room(models.Model):
     name = models.CharField(max_length=25, unique=True)
     capacity = models.IntegerField()
-    availability = models.BooleanField(null=False, default=True)
+    # availability = models.BooleanField(null=False, default=True)
     projector = models.BooleanField(null=False, default=False)
+
+    def reserved(self):
+        today = datetime.now().strftime('%Y-%m-%d')
+        self.reservation_set.filter(today)
 
     def __str__(self):
         return f'{self.name} / {self.capacity}'
