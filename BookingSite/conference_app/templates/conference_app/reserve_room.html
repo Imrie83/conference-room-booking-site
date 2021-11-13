@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+</style>
+</head>
+<body>
+    <div>
+        <a href="/rooms/" class="btn btn-primary">Home</a>
+        <a href="/room/new/" class="btn btn-primary">Add Room</a>
+    </div>
+    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem;">
+        Book room {{ room.name }}
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <label>
+                    Date:
+                    <input type="date" name="date">
+                </label>
+                <label>
+                    Comment:
+                    <input type="text" name="comment">
+                </label>
+                <input type="submit" value="Book" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+<!--TODO: sort out styling -->
+</body>
+</html>
