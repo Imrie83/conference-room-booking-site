@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ room.name }}</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem;">
+        <div>
+            <p>Edit room "{{ room.name }}"</p>
+        </div>
+            <form method="post">
+                {% csrf_token %}
+                <label>
+                    Name: <input type="text" name="name" value="{{ room.name }}">
+                </label><br>
+                <label>
+                    Capacity: <input type="text" name="capacity" value="{{ room.capacity }}">
+                </label><br>
+                <label>
+                    Projector: <input type="checkbox" name="projector" checked="{{ room.projector }}">
+                </label><br>
+                <input type="submit" value="Submit" class="btn btn-primary">
+                <a href="/rooms/" class="btn btn-primary">Back</a>
+            </form>
+        </div>
+    </div>
+    {{ message }}
+</body>
+</html>
