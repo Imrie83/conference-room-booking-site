@@ -5,3 +5,4 @@ class Room(models.Model):
     name = models.TextField(max_length=25, unique=True)
     capacity = models.IntegerField()
     availability = models.BooleanField(null=False, default=True)
+    projector = models.BooleanField(null=False, default=False)
