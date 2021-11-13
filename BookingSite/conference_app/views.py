@@ -30,7 +30,8 @@ class AddRoomView(View):
 
     class ListAllRoomsView(View):
         def get(self, request):
-            pass
+            rooms = Room.objects.all()
+            if not rooms:
+                return render(request, 'conference_app/list_rooms.html', {'message': 'There are no rooms in database'})
+            return render(request, 'conference_app/list_rooms.html', {'rooms': rooms})
 
-        def get(self, request):
-            pass
