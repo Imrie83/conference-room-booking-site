@@ -4,6 +4,7 @@ from django.views import View
 from .models import Room, Reservation
 from datetime import datetime
 from django.contrib import messages
+import re
 
 
 class AddRoomView(View):
@@ -181,20 +182,24 @@ class ReserveRoomView(View):
         date = request.POST['date']
         comment = request.POST['comment']
 
-        reservations_check = Reservation.objects.filter(room=id).filter(date=date)
-
-        if not reservations_check:
-            if date >= datetime.now().strftime('%Y-%m-%d'):
-                Reservation.objects.create(date=date, room_id=id, comment=comment)
-            else:
-                messages.success(request, 'Date cannot be in the past')
-                return redirect("/")
-        else:
-            messages.success(request, 'Room already booked on this day')
+        if not bool(re.search(r'\d', date)):
+            messages.success(request, 'Please choose a date')
             return redirect("/")
+        else:
+            reservations_check = Reservation.objects.filter(room=id).filter(date=date)
 
-        messages.success(request, 'Room booked successfully')
-        return redirect("/")
+            if not reservations_check:
+                if date >= datetime.now().strftime('%Y-%m-%d'):
+                    Reservation.objects.create(date=date, room_id=id, comment=comment)
+                else:
+                    messages.success(request, 'Date cannot be in the past')
+                    return redirect("/")
+            else:
+                messages.success(request, 'Room already booked on this day')
+                return redirect("/")
+
+            messages.success(request, 'Room booked successfully')
+            return redirect("/")
 
 
 class DetailedView(View):
