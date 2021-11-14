@@ -1,0 +1,30 @@
+nav ul {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 5px;
+  background: #007BFF;
+}
+nav li{
+
+}
+
+footer {
+  color: #696969FF;
+  align-items: center;
+  align-content: center;
+}
+
+footer div{
+  justify-content: center;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
