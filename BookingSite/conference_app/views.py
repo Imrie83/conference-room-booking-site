@@ -81,15 +81,16 @@ class ReserveRoomView(View):
         return render(request, 'conference_app/reserve_room.html', {'room': room})
 
     def post(self, request, id):
-        room = Room.objects.get(id=id)
         date = request.POST['date']
         comment = request.POST['comment']
-        # TODO: check if room  already reserver on the date
-        if not room.reserved_today():
-            print('pass first check')
+
+        reservations_check = Reservation.objects.filter(room=id).filter(date=date)
+
+        if not reservations_check:
             if date >= datetime.now().strftime('%Y-%m-%d'):
-                print('debug message')
-                Reservation.objects.create(date=date, room=id, comment=comment)
+                Reservation.objects.create(date=date, room_id=id, comment=comment)
+            else: print('date in the past!')
+        else: print('room already booked for this date')
 
         return redirect("/")
 
