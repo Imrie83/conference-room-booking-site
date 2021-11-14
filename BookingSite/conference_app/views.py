@@ -3,6 +3,7 @@ from django.http import HttpResponse, response
 from django.views import View
 from .models import Room, Reservation
 from datetime import datetime
+from django.contrib import messages
 
 
 class AddRoomView(View):
@@ -16,16 +17,18 @@ class AddRoomView(View):
 
         if room_name:
             if not room_capacity > 0:
-                return render(request, 'conference_app/add_room.html', {
-                    'message': 'Room capacity has to be greater than 0'
-                })
+                messages.error(request, 'Capacity has to be greater than 0')
+                return redirect("/")
             try:
                 new_room = Room.objects.create(name=room_name, capacity=room_capacity, projector=projector)
             except Exception:
-                return render(request, 'conference_app/add_room.html', {'message': 'Room already exist'})
+                messages.error(request, 'Room already exist')
+                return redirect("/")
         else:
-            return render(request, 'conference_app/add_room.html', {'message': 'Add room name'})
+            messages.error(request, 'Name required')
+            return redirect("/")
 
+        messages.success(request, 'Room added successfully')
         return redirect("/")
 
 
@@ -33,7 +36,8 @@ class ListAllRoomsView(View):
     def get(self, request):
         rooms = Room.objects.all()
         if not rooms:
-            return render(request, 'conference_app/list_rooms.html', {'message': 'There are no rooms in database'})
+            messages.success(request, 'There are no rooms in database')
+            return redirect("/")
         return render(request, 'conference_app/list_rooms.html', {'rooms': rooms})
 
 
@@ -48,8 +52,6 @@ class ModifyRoomView(View):
         room = Room.objects.get(id=id)
         if room:
             return render(request, 'conference_app/edit_room.html', {'room': room})
-        else:
-            return render(request, 'conference_app/edit_room.html', {'message': 'Room not found'})
 
     def post(self, request, id):
         update_room = Room.objects.get(id=id)
@@ -60,18 +62,21 @@ class ModifyRoomView(View):
 
         if room_name:
             if not room_capacity > 0:
-                return HttpResponse('Room capacity has to be greater than 0')
+                messages.error(request, 'Room capacity has to be greater than 0')
+                return redirect("/")
             try:
                 update_room.name = room_name
                 update_room.capacity = room_capacity
                 update_room.projector = projector
                 update_room.save()
             except Exception as e:
-                print(e)
-                return HttpResponse('Room with this name exist')
+                messages.error(request, 'Room with this name exists')
+                return redirect("/")
         else:
-            return HttpResponse('Add room name')
+            messages.error(request, 'Room requires name')
+            return redirect("/")
 
+        messages.success(request, 'Room modified successfully')
         return redirect("/")
 
 
@@ -89,9 +94,14 @@ class ReserveRoomView(View):
         if not reservations_check:
             if date >= datetime.now().strftime('%Y-%m-%d'):
                 Reservation.objects.create(date=date, room_id=id, comment=comment)
-            else: print('date in the past!')
-        else: print('room already booked for this date')
+            else:
+                messages.success(request, 'Date cannot be in the past')
+                return redirect("/")
+        else:
+            messages.success(request, 'Room already booked on this day')
+            return redirect("/")
 
+        messages.success(request, 'Room booked successfully')
         return redirect("/")
 
 
