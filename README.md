@@ -1,2 +1,2 @@
-# django_workshop
-Django Practice Repo
+# Conference room booking site with django
+Django Practice project
