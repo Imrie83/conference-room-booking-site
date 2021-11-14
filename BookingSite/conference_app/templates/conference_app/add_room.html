@@ -3,22 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Room</title>
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'conference_app/css/layout.css' %}">
 </head>
 <body>
-    <div>
-        <a href="/rooms/" class="btn btn-primary">Home</a>
-        <a href="/room/new/" class="btn btn-primary">Add Room</a>
+    <div class="container">
+        <nav>
+            <ul>
+                <li>
+                <a href="/rooms/" class="btn btn-primary">Home</a>
+                </li>
+                <li>
+                <a href="/room/new/" class="btn btn-primary">Add Room</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="card-container">
+            <div class="card" style="width: 18rem; margin: 2rem 0 0 0; padding: 1rem; ">
+            <form method="post">
+                {% csrf_token %}
+                <label>Room Name: <input type="text" name="name"></label><br>
+                <label>Capacity: <input type="number" name="capacity" value="0"></label><br>
+                <label>Projector <input type="checkbox" name="projector"></label><br>
+                <input type="submit" value="Add" class="btn btn-primary">
+            </form>
+        </div>
+     </div>
+        <br>
+
+        <footer aria-label="breadcrumb">
+            <div class="breadcrumb">Created by: Marcin Zieliński</div>
+        </footer>
     </div>
-    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem; ">
-    <form method="post">
-        {% csrf_token %}
-        <label>Room Name: <input type="text" name="name"></label><br>
-        <label>Capacity: <input type="number" name="capacity" value="0"></label><br>
-        <label>Projector <input type="checkbox" name="projector"></label><br>
-        <input type="submit" value="Add" class="btn btn-primary">
-    </form>
-    </div>
-<div>{{ message }}</div>
 </body>
 </html>

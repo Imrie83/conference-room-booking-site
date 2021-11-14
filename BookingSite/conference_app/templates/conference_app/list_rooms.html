@@ -4,35 +4,46 @@
     <meta charset="UTF-8">
     <title>Rooms List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'conference_app/css/layout.css' %}">
     <style>
-a.button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    text-decoration: none;
-    color: initial;
-}
+
 </style>
 </head>
 <body>
-    <div>
-            <a href="/rooms/" class="btn btn-primary">Home</a>
-            <a href="/room/new/" class="btn btn-primary">Add Room</a>
-    </div>
-    {% for room in rooms %}
-    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem;">
-        <div class="card-body">
-            <h5 class="card-title"><a href="/room/{{ room.id }}/" >{{ room.name }}</a></h5><br>
-            <p class="card-text">
-                Capacity: {{ room.capacity }}<br>
-                Projector: {{ room.projector|yesno:"✔,✘" }}<br>
-                Booked Today: {{ room.reserved_today|yesno:'✔,✘'}}
-            </p>
-            <a href="/room/modify/{{ room.id }}" class="btn btn-primary">Edit</a>
-            <a href="/room/reserve/{{ room.id }}" class="btn btn-primary">Book</a>
-            <a href="/room/delete/{{ room.id }}" class="btn btn-danger">Delete</a>
+    <div class="container">
+        <nav>
+            <ul>
+                <li>
+                <a href="/rooms/" class="btn btn-primary">Home</a>
+                </li>
+                <li>
+                <a href="/room/new/" class="btn btn-primary">Add Room</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="card-container">
+            {% for room in rooms %}
+            <div class="card" style="width: 18rem; margin: 2rem 0 0 0;">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/room/{{ room.id }}/" >{{ room.name }}</a></h5><br>
+                    <p class="card-text">
+                        Capacity: {{ room.capacity }}<br>
+                        Projector: {{ room.projector|yesno:"✔,✘" }}<br>
+                        Booked Today: {{ room.reserved_today|yesno:'✔,✘'}}
+                    </p>
+                    <a href="/room/modify/{{ room.id }}" class="btn btn-primary">Edit</a>
+                    <a href="/room/reserve/{{ room.id }}" class="btn btn-primary">Book</a>
+                    <a href="/room/delete/{{ room.id }}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
+        <br>
+
+        <footer aria-label="breadcrumb">
+            <div class="breadcrumb">Created by: Marcin Zieliński</div>
+        </footer>
     </div>
-    {% endfor %}
-<!--TODO: sort out styling -->
 </body>
 </html>

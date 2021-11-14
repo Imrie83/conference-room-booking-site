@@ -4,31 +4,56 @@
     <meta charset="UTF-8">
     <title>Rooms List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'conference_app/css/layout.css' %}">
     <style>
 </style>
 </head>
 <body>
-    <div>
-        <a href="/rooms/" class="btn btn-primary">Home</a>
-        <a href="/room/new/" class="btn btn-primary">Add Room</a>
-    </div>
-    <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem;">
-        Book room {{ room.name }}
-        <div>
-            <form method="post">
-                {% csrf_token %}
-                <label>
-                    Date:
-                    <input type="date" name="date">
-                </label>
-                <label>
-                    Comment:
-                    <input type="text" name="comment">
-                </label>
-                <input type="submit" value="Book" class="btn btn-primary">
-            </form>
+ <div class="container">
+    <nav>
+        <ul>
+            <li>
+            <a href="/rooms/" class="btn btn-primary">Home</a>
+            </li>
+            <li>
+            <a href="/room/new/" class="btn btn-primary">Add Room</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="card-container">
+        <div class="card" style="width: 18rem; margin: 2rem 0 0 0; padding: 1rem;">
+            <strong>Book room {{ room.name }}</strong><br>
+            <div>
+                <form method="post">
+                    {% csrf_token %}
+                    <label>
+                        Date:<br>
+                        <input type="date" name="date">
+                    </label>
+                    <label>
+                        Comment:
+                        <input type="text" name="comment">
+                    </label>
+                    <input type="submit" value="Book" class="btn btn-primary">
+                </form>
+            </div>
         </div>
-    </div>
+        <div class="card" style="width: 18rem; margin: 2rem 0 0 2rem; padding: 1rem;">
+            <strong>Future Reservations:</strong><br>
+            {% for reservation in room.reservation_list.all %}
+            <div>
+                Date: {{ reservation.date }}<br>
+                Comments: {{ reservation.comment }}
+            </div><br>
+        {% endfor %}
+        </div>
+    </div><br>
+        <footer aria-label="breadcrumb">
+            <div class="breadcrumb">Created by: Marcin Zieliński</div>
+        </footer>
+ </div>
+
 <!--TODO: sort out styling -->
 </body>
 </html>
