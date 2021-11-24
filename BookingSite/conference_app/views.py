@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, response
+, response
 from django.views import View
 from .models import Room, Reservation
 from datetime import datetime
